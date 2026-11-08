@@ -1,0 +1,9 @@
+date,region,product,sales,units_sold,returns,cost,channel
+2026-08-01,Hyderabad,Knee Support X200,420000,600,18,230000,Retail
+2026-09-01,Hyderabad,Knee Support X200,380000,540,25,210000,Retail
+2026-08-01,Delhi,Knee Immobilizer,510000,620,20,300000,Distributor
+2026-09-01,Delhi,Knee Immobilizer,418000,510,31,260000,Distributor
+2026-08-01,Mumbai,Lumbo-Sacral Back Belt,360000,450,14,190000,Retail
+2026-09-01,Mumbai,Lumbo-Sacral Back Belt,325000,405,22,175000,Retail
+2026-09-01,Chennai,Wrist Support,290000,500,9,145000,Retail
+2026-09-01,Bengaluru,Ankle Brace,310000,470,12,160000,Retail

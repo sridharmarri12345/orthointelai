@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101827"><title>OrthoIntel AI | Market Intelligence</title>
+<link rel="stylesheet" href="/assets/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="app-shell">
+<aside class="sidebar" id="sidebar">
+ <div class="brand"><div class="brand-mark">OI</div><div><b>OrthoIntel</b><small>AI INTELLIGENCE</small></div></div>
+ <div class="nav-label">WORKSPACE</div>
+ <nav id="navigation">
+  <button class="nav-link active" data-view="dashboard"><span>▦</span> Executive dashboard</button>
+  <button class="nav-link" data-view="sales"><span>▤</span> Sales intelligence</button>
+  <button class="nav-link" data-view="reviews"><span>✧</span> Customer reviews</button>
+  <button class="nav-link" data-view="rootcause"><span>⌁</span> Root-cause analysis</button>
+  <button class="nav-link" data-view="factory"><span>⚙</span> Factory actions</button>
+  <button class="nav-link" data-view="field"><span>⌖</span> Field force</button>
+  <button class="nav-link" data-view="margin"><span>₹</span> Margin optimizer</button>
+  <button class="nav-link" data-view="reports"><span>▧</span> Reports & audit</button>
+ </nav>
+ <div class="sidebar-bottom"><div class="online"><i></i><div><b>API connected</b><small id="apiStatus">Checking service…</small></div></div><div class="profile"><div class="avatar">A</div><div><b>Administrator</b><small>Executive workspace</small></div></div></div>
+</aside>
+<main class="main">
+<header class="topbar"><button class="mobile-toggle" id="mobileToggle">☰</button><div><div class="eyebrow">ORTHOPAEDIC MARKET INTELLIGENCE</div><h1 id="pageTitle">Executive dashboard</h1></div><div class="top-right"><span class="live-pill"><i></i> LOCAL DEMO</span><button class="refresh" id="refreshBtn">↻ Refresh</button></div></header>
+<div class="content">
+<section class="view active" id="view-dashboard">
+ <div class="hero"><div><span class="hero-kicker">✦ DECISIONS, BACKED BY DATA</span><h2>Turn customer feedback<br>into <em>market advantage.</em></h2><p>Connect product quality, sales performance and competitor signals in one operational intelligence workspace.</p><button class="btn primary" id="runAnalysis">Run intelligence analysis <b>→</b></button></div><div class="hero-orbit"><div class="orbit-ring"></div><div class="orbit-core">OI<span>AI</span></div><div class="float-tag tag-a">NLP insights <b>4 pillars</b></div><div class="float-tag tag-b">Sales signals <b>Regional</b></div><div class="float-tag tag-c">Action engine <b>Human-led</b></div></div></div>
+ <div class="section-head"><div><h2>Business overview</h2><p>Metrics calculated from the current local database</p></div><span class="subtle" id="lastUpdated">Loading…</span></div>
+ <div class="kpi-grid">
+  <article class="kpi"><div class="kpi-label">Total sales value <span class="kpi-icon">₹</span></div><strong id="kpiSales">—</strong><small>Imported sales revenue</small></article>
+  <article class="kpi"><div class="kpi-label">Units sold <span class="kpi-icon blue">▥</span></div><strong id="kpiUnits">—</strong><small>Across uploaded records</small></article>
+  <article class="kpi"><div class="kpi-label">Reviews analyzed <span class="kpi-icon violet">✧</span></div><strong id="kpiReviews">—</strong><small>Customer feedback records</small></article>
+  <article class="kpi alert-kpi"><div class="kpi-label">Return rate <span class="kpi-icon amber">↻</span></div><strong id="kpiReturns">—</strong><small>Returns divided by units sold</small></article>
+ </div>
+ <div class="two-col"><article class="panel"><div class="panel-head"><div><h3>Sales by region</h3><p>Revenue contribution · INR</p></div><span class="tag">DATABASE</span></div><canvas id="regionChart" height="210"></canvas></article><article class="panel"><div class="panel-head"><div><h3>Customer sentiment</h3><p>Review classification distribution</p></div><span class="tag">NLP</span></div><canvas id="sentimentChart" height="210"></canvas><div class="sentiment-legend" id="sentimentLegend"></div></article></div>
+ <div class="two-col"><article class="panel"><div class="panel-head"><div><h3>Four product feedback pillars</h3><p>Mentions and negative feedback signals</p></div><button class="text-btn" data-goto="reviews">Open reviews →</button></div><div id="pillarOverview" class="pillar-overview"></div></article><article class="panel"><div class="panel-head"><div><h3>Priority investigation signals</h3><p>Review and sales data matched by product and region</p></div><button class="text-btn" data-goto="rootcause">View all →</button></div><div id="dashboardAlerts"></div></article></div>
+ <p class="footnote">Demo records are illustrative. Replace them with validated company data before using results for operational decisions.</p>
+</section>
+<section class="view" id="view-sales">
+ <div class="page-intro"><div><div class="eyebrow">PHASE 1 · INTERNAL FINANCIAL VITALITY</div><h2>Sales intelligence</h2><p>Import monthly product and regional sales records to monitor revenue, units and returns.</p></div><label class="btn primary file-btn">Upload sales CSV<input type="file" id="salesUpload" accept=".csv"></label></div>
+ <div class="kpi-grid compact"><article class="kpi"><small>Total sales</small><strong id="salesTotal">—</strong></article><article class="kpi"><small>Units sold</small><strong id="salesUnits">—</strong></article><article class="kpi"><small>Returns</small><strong id="salesReturns">—</strong></article><article class="kpi"><small>Return rate</small><strong id="salesRate">—</strong></article></div>
+ <article class="panel"><div class="panel-head"><div><h3>Regional sales performance</h3><p>Upload a CSV to replace or append records; current import is appended.</p></div><a class="text-btn" href="/api/templates/sales.csv" download>Sample format</a></div><div class="table-wrap"><table><thead><tr><th>Region</th><th>Product</th><th>Sales (₹)</th><th>Units</th><th>Returns</th></tr></thead><tbody id="salesTable"></tbody></table></div></article>
+ <div class="notice"><b>Expected columns:</b> region, product, sales. Optional: date, units_sold, returns, cost, channel.</div>
+</section>
+<section class="view" id="view-reviews">
+ <div class="page-intro"><div><div class="eyebrow">PHASE 1 + PHASE 2 · VOICE OF CUSTOMER</div><h2>Customer reviews & NLP</h2><p>Classify sentiment and map customer language to the four product-health pillars.</p></div><label class="btn primary file-btn">Import reviews CSV<input type="file" id="reviewUpload" accept=".csv"></label></div>
+ <div class="two-col review-layout"><article class="panel"><div class="panel-head"><div><h3>Analyze an individual review</h3><p>Text is stored locally after analysis.</p></div><span class="tag">LIVE NLP</span></div><form id="reviewForm"><label>Customer review<textarea id="reviewText" required minlength="5" placeholder="Example: The knee support is comfortable but the Velcro wears out quickly…"></textarea></label><div class="form-grid"><label>Product<input id="reviewProduct" value="Knee Support X200"></label><label>Region<input id="reviewRegion" value="Hyderabad"></label><label>Source<input id="reviewSource" value="Manual"></label><label>Rating (optional)<input id="reviewRating" type="number" min="1" max="5" step=".5" placeholder="1–5"></label></div><button class="btn primary" type="submit">Analyze review →</button></form><div id="singleResult"></div></article><article class="panel"><div class="panel-head"><div><h3>Sentiment overview</h3><p>From all stored review records</p></div></div><div id="reviewSentiment" class="sentiment-summary"></div><h4 class="subheading">Frequent customer keywords</h4><div id="keywords" class="keyword-list"></div></article></div>
+ <article class="panel"><div class="panel-head"><div><h3>Four feedback pillars</h3><p>Presence counts, not clinical quality scores</p></div></div><div id="pillarCards" class="pillar-cards"></div></article>
+ <article class="panel"><div class="panel-head"><div><h3>Recent analyzed reviews</h3><p>Newest 30 records</p></div></div><div class="table-wrap"><table><thead><tr><th>Review</th><th>Product</th><th>Region</th><th>Sentiment</th></tr></thead><tbody id="reviewTable"></tbody></table></div></article>
+ <div class="notice">NLP baseline uses transparent keyword rules and negation handling. It is not a medically validated model; evaluate and retrain with representative, human-labelled reviews for production use.</div>
+</section>
+<section class="view" id="view-rootcause">
+ <div class="page-intro"><div><div class="eyebrow">PHASE 2 · DIAGNOSTIC ENGINE</div><h2>Root-cause analysis</h2><p>Connect negative feedback patterns with product/region sales and returns.</p></div><button class="btn primary" id="refreshRoot">Recalculate signals ↻</button></div>
+ <div class="notice warning"><b>Interpretation guardrail:</b> A matched negative-review pattern is an investigation signal, not proof that the complaint caused a sales decline. Causal analysis requires time-aligned baselines, confounders and sufficient observations.</div>
+ <div id="rootCards" class="root-list"></div>
+</section>
+<section class="view" id="view-factory">
+ <div class="page-intro"><div><div class="eyebrow">PHASE 3 · EXECUTIVE ACTION</div><h2>Factory action center</h2><p>Turn verified product-quality issues into traceable engineering tickets.</p></div></div>
+ <div class="two-col"><article class="panel"><div class="panel-head"><div><h3>Create engineering ticket</h3><p>Human review is required before production changes.</p></div></div><form id="ticketForm"><label>Product<input id="ticketProduct" required placeholder="e.g. Knee Immobilizer"></label><label>Observed issue<textarea id="ticketIssue" required placeholder="Describe the evidence and affected batch/variant…"></textarea></label><label>Recommended investigation<textarea id="ticketRecommendation" required placeholder="e.g. Inspect stitching spec and run wash-cycle validation"></textarea></label><label>Priority<select id="ticketPriority"><option>Medium</option><option>High</option><option>Critical</option><option>Low</option></select></label><button class="btn primary">Create factory ticket</button></form></article><article class="panel"><h3>Factory workflow</h3><div class="workflow"><div><b>1 · Alert</b><small>AI flags a pattern</small></div><div><b>2 · Review</b><small>Quality/engineering validates</small></div><div><b>3 · Approve</b><small>Authorized manager approves</small></div><div><b>4 · Execute</b><small>Factory implements controlled change</small></div><div><b>5 · Verify</b><small>Monitor quality and returns</small></div></div></article></div>
+ <article class="panel"><div class="panel-head"><div><h3>Engineering ticket register</h3><p>Track issue status and decisions</p></div></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>Product / issue</th><th>Priority</th><th>Status</th><th>Update status</th></tr></thead><tbody id="ticketTable"></tbody></table></div></article>
+</section>
+<section class="view" id="view-field">
+ <div class="page-intro"><div><div class="eyebrow">PHASE 3 · FIELD EXECUTION</div><h2>Field force intelligence</h2><p>Review potential market gaps and plan visits. Locations below are illustrative demo leads.</p></div><span class="tag">DEMO LEADS</span></div>
+ <div class="two-col"><article class="panel"><div class="panel-head"><div><h3>Competitor availability observation</h3><p>Record a verified signal from a permitted source or field rep.</p></div></div><form id="competitorForm"><label>Competitor<input id="competitorName" value="Tynor" required></label><label>Product<input id="competitorProduct" value="Knee Immobilizer" required></label><label>Region<input id="competitorRegion" value="Delhi" required></label><label>Observed status<select id="competitorStatus"><option>Out of stock</option><option>Low stock</option><option>Delayed</option><option>In stock</option></select></label><button class="btn primary">Save observation</button></form></article><article class="panel"><h3>Field representative checklist</h3><ul class="check-list"><li>Verify stock gap with retailer before proposing substitution.</li><li>Confirm product fit, approved claims and availability.</li><li>Use only manager-authorized commercial offers.</li><li>Record visit outcome and follow-up date.</li></ul><div class="notice">This MVP does not access phone GPS or scrape quick-commerce services. Map links open a search for the named area; live routing needs a mobile app and location permission.</div></article></div>
+ <article class="panel"><div class="panel-head"><div><h3>Potential retail opportunities</h3><p>Demo locations; validate demand before visiting.</p></div></div><div id="fieldLeads" class="lead-grid"></div></article>
+ <article class="panel"><div class="panel-head"><div><h3>Competitor observations</h3><p>Manual/API-imported observations with timestamps</p></div></div><div class="table-wrap"><table><thead><tr><th>Competitor</th><th>Product</th><th>Region</th><th>Status</th><th>Observed at</th></tr></thead><tbody id="competitorTable"></tbody></table></div></article>
+</section>
+<section class="view" id="view-margin">
+ <div class="page-intro"><div><div class="eyebrow">PHASE 2 · COMMERCIAL OPTIMIZATION</div><h2>Margin optimizer</h2><p>Test a proposed trade margin against a minimum company contribution guardrail.</p></div></div>
+ <div class="two-col"><article class="panel"><form id="marginForm"><label>MRP / reference selling price (₹)<input id="mrp" type="number" min="1" value="1000" required></label><label>Base product cost (₹)<input id="baseCost" type="number" min="1" value="420" required></label><label>Current retailer margin (%)<input id="retailerMargin" type="number" min="0" max="80" value="25" required></label><label>Proposed trade margin (%)<input id="proposedMargin" type="number" min="0" max="80" value="33" required></label><label>Minimum company margin (%)<input id="minimumMargin" type="number" min="0" max="80" value="15" required></label><button class="btn primary">Calculate safe offer →</button></form></article><article class="panel" id="marginResult"><div class="empty-state">Enter pricing assumptions and calculate a proposed offer.</div></article></div>
+ <div class="notice">The calculation is a simplified gross contribution model. Specify whether trade margin is calculated on MRP or another base. Taxes, distributor layers, schemes, freight, returns, credit costs and channel terms must be added before real commercial approval.</div>
+</section>
+<section class="view" id="view-reports">
+ <div class="page-intro"><div><div class="eyebrow">GOVERNANCE & EXPORTS</div><h2>Reports & audit trail</h2><p>Export business summaries and inspect operational events.</p></div><a class="btn primary" href="/api/reports/summary.csv">Export sales CSV ↓</a></div>
+ <article class="panel"><div class="panel-head"><div><h3>Recent audit events</h3><p>Local record of imports, analysis and actions</p></div><button class="text-btn" id="refreshAudit">Refresh</button></div><div class="table-wrap"><table><thead><tr><th>Time</th><th>Actor</th><th>Action</th><th>Details</th></tr></thead><tbody id="auditTable"></tbody></table></div></article>
+ <article class="panel"><h3>Data governance checklist</h3><ul class="check-list"><li>Use authorized data sources and respect platform terms.</li><li>Minimize customer personal data and define retention periods.</li><li>Apply authentication, role-based access and HTTPS before deployment.</li><li>Keep approval logs for factory changes and commercial discounts.</li><li>Monitor model drift, false positives and fairness across regions.</li></ul></article>
+</section>
+<footer>OrthoIntel AI · Local MVP · Decision support only · <span id="footerYear"></span></footer>
+</div></main></div>
+<div id="toast" class="toast"></div><script src="/assets/app.js"></script>
+</body></html>
